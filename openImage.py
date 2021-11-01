@@ -4,11 +4,9 @@ import svd_process
 
 img = Image.open("4-3.png")
 img_arr = np.array(img)
-img_r = img_arr[0]
-print(img_r)
-print(img_r.shape)
 
-# 1. Baca Image
+
+# 1. Baca Image ***UDAH KELAR***
 # 2. Ubah pixel value (RGBA + Grayscale) ke matriks secara terpisah
 # 3. Cari perkalian matriks pixel dengan matriks transpose
 # 4. Kurangin dengan matriks identitas eigen
