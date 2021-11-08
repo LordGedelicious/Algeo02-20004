@@ -2,17 +2,18 @@ import numpy as np
 import cv2
 from sympy import symbols, Matrix
 
+sample = np.array([[1,5,7],[3,0,-2],[-1,2,1]])
 
 def left_singular(matrix):
-    width, height = matrix.shape
-    matrix_t = matrix.T
-    print(matrix_t)
-    multiply = np.arange(width * width).reshape(width, width)
-    for i in range(len(matrix)):
-        for j in range(len(matrix_t[0])):
-            for k in range(len(matrix_t)):
-                multiply[i][j] += matrix[i][k] * matrix_t[k][j]
-    identity = np.identity(len(multiply), dtype=int)
-    print(multiply)
+    length, width = matrix.shape
+    x = symbols('x')
+    identity = np.identity(length, dtype=int)
+    print(identity)
+    for i in range(0,length):
+        for j in range(0,width):
+            if (identity[i][j] == 1):
+                identity[i][j] = x
+    print(identity)
+    print(matrix)
 
-
+left_singular(sample)
