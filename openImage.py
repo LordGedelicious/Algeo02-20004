@@ -21,21 +21,31 @@ def imagePreprocessing(path):
             blue_scale[i][j] = img_mat[i][j][1]
             green_scale[i][j] = img_mat[i][j][2]
             transparency[i][j] = img_mat[i][j][3]
-    
+
+    printMatrix(red_scale)
+    print("\n")
+
     # transpose untuk persiapan perkalian
     red_scale_t = np.transpose(red_scale)
     blue_scale_t = np.transpose(blue_scale)
     green_scale_t = np.transpose(green_scale)
+
+    printMatrix(red_scale_t)
+    print("\n")
 
     # AAT (A x A^T)
     rrt = np.matmul(red_scale, red_scale_t)
     bbt = np.matmul(blue_scale, blue_scale_t)
     ggt = np.matmul(green_scale, green_scale_t)
 
+    print(rrt[0][0])
+    printMatrix(rrt)
+
     # ATA (A^T x A)
     rtr = np.matmul(red_scale_t, red_scale)
     btb = np.matmul(blue_scale_t, blue_scale)
     gtg = np.matmul(green_scale_t, green_scale)
+
 
 
 def printMatrix(m):
@@ -51,19 +61,3 @@ def printMatrix(m):
 
 imagePreprocessing("4-3.png")
 
-
-
-# 1. Baca Image ***UDAH KELAR***
-# 2. Ubah pixel value (RGBA + Grayscale) ke matriks secara terpisah
-# 3. Cari perkalian matriks pixel dengan matriks transpose
-# 4. Kurangin dengan matriks identitas eigen
-# 5. Cari determinan sama dengan nol untuk nomor 4
-# 6. Simpen nilai value eigen (harus lebih besar dari nol)
-# 7. Cari vektor eigennya (asumsi t = 1 atau disimpan sebagai variabel dl)
-# 7.5. Buat matriks U dari normalisasi vektor eigen
-# 8. Cari perkalian matriks transpose pixel dengan matriks biasa (singular kanan)
-# 9. Cari vektor dan nilai eigen untuk nomor 8
-# 10. Buat matriks v
-# 11. Buat matriks Sigma dari nilai eigen singular kiri dan kanan (asal bukan nol)
-# 12. Ranking matriksnya
-# 13. Buat webnya (link ke BE jg)
