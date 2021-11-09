@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='stylesheet' href='/static/bootstrap/css/bootstrap.min.css'>
+    <link rel="icon" href="/static/images/compressify_icon.ico" type="image/x-icon"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compressify</title>
+</head>
+<body>
+    <div class="container d-grid gap-5">
+        <nav class="navbar navbar-expand-xl navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+                    Compressify</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ms-auto text-center">
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('howtouse') }}">How to Use</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('aboutus') }}">About Us</a>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="mx-auto d-grid gap-2" style="width: 400px;">
+        <h2 class="text-center ">Welcome to Compressify!</h2>
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile02">
+            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+        </div>
+        <label for="customRange2" class="form-label">Image Compression Rate (0-100%):</label>
+        <input type="range" class="form-range" min="0" max="100" id="customRange2">
+        <button type="button" class="btn btn-dark">Compress</button>
+    </div>
+    
+
+    
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

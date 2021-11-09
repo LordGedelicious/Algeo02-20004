@@ -6,33 +6,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compressify</title>
+    <title>About Us | Compressify</title>
 </head>
 <body>
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            
-            Compressify
-          </a>
-
-          <ul class="nav nav-pills ms-auto">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">How to Use</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
-            </li>
-        </ul>
-        </div>
-    </nav> -->
     <div class="container">
         <nav class="navbar navbar-expand-xl navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{ url_for('home') }}">
                     <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
                     Compressify</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,13 +21,13 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav ms-auto text-center">
                     <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">How to Use</a>
+                    <a class="nav-link" href="{{ url_for('howtouse') }}">How to Use</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">About Us</a>
+                    <a class="nav-link active" aria-current="page" href="#">About Us</a>
                     </li>
                 </ul>
                 </div>
@@ -55,11 +35,8 @@
         </nav>
     </div>
 
-      
     
-    <p>this is my {{lmao}}</p>
 
-    <button type="button" class="btn btn-primary">Primary</button>
 
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
