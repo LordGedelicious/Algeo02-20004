@@ -12,29 +12,30 @@ def singular_vectors(matrix, left=True):
             Argumen matrix berupa matriks ATA dan left = False.\n
         
         Prekondisi: matrix berupa matriks persegi."""
-        
+    print(matrix)
     length, width = matrix.shape
     
     x = symbols('x')
     identity = create_identity(matrix)
     eigen_val = eigen_values(matrix)
     zero_matrix = zeros(length,1)
+    print(zero_matrix)
     final_eigen_vector = Matrix([[]])
     
     # menghitung vektor eigen
-    for i in range(sympy.shape(eigen_val)[0]):
+    for i in range(eigen_val.cols):
         # subtitusi x pada identity menjadi nilai eigennya
         for j in range(length):
             for k in range(width):
-                if (identity[j,k] == x or identity[j,k] == eigen_val[i-1,0]):
-                    identity[j,k] = eigen_val[i,0]
-        
+                if (identity[j,k] == x or identity[j,k] == eigen_val[0,i-1]):
+                    identity[j,k] = eigen_val[0,i]
         identity_subtract_matrix = identity - matrix
-        solutions, params = identity_subtract_matrix.gauss_jordan_solve(zero_matrix)
+        solutions, params = identity_subtract_matrix.gauss_jordan_solve(sympy.Matrix([[0],[0],[0]]))
+        print(solutions)
         for p in params:
             # subtitusi 1 ke parameter pada solutions
             partial_solution_temp = solutions.xreplace({p:1})
-            partial_solution = partial_solution_temp.xreplace({p:0 for _ in params})
+            partial_solution = partial_solution_temp.xreplace({p:0 for p in params})
             
             # normalisasi vektor
             vector_len = 0
@@ -59,25 +60,22 @@ def eigen_values(matrix):
         
     x = symbols('x')
     identity = create_identity(matrix)
-    
     identity_subtract_matrix = identity - matrix
-    eigen_val = solve(identity_subtract_matrix.det(),x)
-    print("sebelum disort:", eigen_val)
-    eigen_val = eigen_sort(eigen_val)
-    print("sesudah disort:", eigen_val)
-    eigen_val = Matrix(eigen_val)
+    eigen_val = sympy.Poly(identity_subtract_matrix.det()).all_coeffs()
+    eigen_val_np = np.array(eigen_val).astype(np.float64)
+    eigen_val = Matrix([np.roots(eigen_val_np)])
 
     return eigen_val
 
 
-def eigen_sort(arr):
-    new_arr = []
-    
-    for _ in range(len(arr)):
-        new_arr.append(max(arr))
-        arr.remove(max(arr))
-    
-    return new_arr
+def eigen_sort(mat):
+    for i in range(0,mat.rows):
+        for j in range(0,mat.rows):
+            if mat[i] > mat[j]:
+                temp = mat[i]
+                mat[i] = mat[j]
+                mat[j] = temp
+    return mat
 
 
 def create_identity(matrix):
@@ -116,5 +114,5 @@ def singular_values(matrix):
     return final_singular_matrix
     
 # sample adalah matrix AAT yang siap dibuat jadi matriks singular kiri
-# sample = np.array([[96809,65909,70644,0,0,0,0,0,0,0], [65909,98633,58618,0,0,0,0,0,0,0], [70644,58618,82918,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]])
-# print(singular_vectors(sample, True))
+sample = np.array([[96809,65909,70644], [65909,98633,58618], [70644,58618,82918]])
+print(singular_vectors(sample, True))

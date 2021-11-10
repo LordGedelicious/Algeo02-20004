@@ -1,19 +1,21 @@
-X = [[12,7,3],
-    [4 ,5,6],
-    [7 ,8,9]]
-# 3x4 matrix
-Y = [[5,8,1,2],
-    [6,7,3,0],
-    [4,5,9,1]]
-# result is 3x4
-result = [[0,0,0,0],
-         [0,0,0,0],
-         [0,0,0,0]]
+import numpy
+import sympy
 
-# iterate through rows of X
-for i in range(len(X)):
-   # iterate through columns of Y
-   for j in range(len(Y[0])):
-       # iterate through rows of Y
-       for k in range(len(Y)):
-           result[i][j] += X[i][k] * Y[k][j]
+mat = sympy.Matrix([[-3,8,-11,6,2,0,-6,9,1,7,0,-2]])
+for i in range(0,mat.cols):
+    for j in range(0,mat.cols):
+        if mat[i] > mat[j]:
+            temp = mat[i]
+            mat[i] = mat[j]
+            mat[j] = temp
+
+print(mat)
+x = sympy.symbols('x')
+solution = sympy.solve(x**3 - 278360*x**2 + 12983580912*x - 152533992248140,x)
+print(solution)
+
+arr = [1,-278360,12983580912,-152533992248140]
+print(numpy.roots(arr))
+
+polynoms = sympy.Poly(x**3 - 278360*x**2 + 12983580912*x - 152533992248140)
+print(polynoms.all_coeffs())
