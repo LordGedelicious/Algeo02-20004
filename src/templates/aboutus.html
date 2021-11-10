@@ -9,7 +9,7 @@
     <title>About Us | Compressify</title>
 </head>
 <body>
-    <div class="container d-grid gap-5">
+    <div class="container">
         <nav class="navbar navbar-expand-xl navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url_for('home') }}">
@@ -34,30 +34,34 @@
             </div>
         </nav>
 
-        <div class="row justify-content-md-center">
-            <div class="col col-lg-3">
-                <img src="/static/images/compressify_logo.png" width="250" height="250">
+        <div class="d-grid gap-5">
+            <div class="row justify-content-md-center">
+                    <div class="col col-lg-3">
+                        <a href="{{ url_for('home') }}"><img src="/static/images/compressify_logo.png" width="250" height="250"></a>
+                    </div>
+                    <div class="col col-lg-3 my-auto">
+                        <p class="h1">Introducing, Compressify!</p>
+                    </div>
             </div>
-            <div class="col col-lg-3 my-auto">
-                <p class="h1">Introducing, Compressify!</p>
-            </div>
+
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                <p>Gone are the days of lossless and big image files that hogs up your precious hard drive space!</p>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                The penCITRAan Team <cite title="Source Title">2021</cite>
+                </figcaption>
+            </figure>
         </div>
-
-        <figure class="text-center">
-            <blockquote class="blockquote">
-              <p>Gone are the days of lossless and big image files that hogs up your precious hard drive space!</p>
-            </blockquote>
-            <figcaption class="blockquote-footer">
-              The penCITRAan Team <cite title="Source Title">2021</cite>
-            </figcaption>
-          </figure>
-          We have all gone around the internet searching for that good meme which tingles our meme hearts. Whether it be
-          something you've seen in a recent PewDiePie video, accidentaly stumbling upon it on an Instagram post, 
-          or making the effort to actually search for memes like a real memelord on the r/dankmemes subreddit, we all are a creature
-          desperate for the need of memes.
+        <p>
+            We have all gone around the internet searching for that good meme which tingles our meme hearts. Whether it be
+            something you've seen in a recent PewDiePie video, accidentaly stumbling upon it on an Instagram post, 
+            or making the effort to actually search for memes like a real memelord on the r/dankmemes subreddit, we all are a creature
+            desperate for the need of memes.
+        </p>
 
 
-    
+    </div>
 
 
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
