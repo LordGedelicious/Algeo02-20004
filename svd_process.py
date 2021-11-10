@@ -1,5 +1,5 @@
 import numpy as np
-from numpy.core.fromnumeric import transpose
+from numpy.core.fromnumeric import sort, transpose
 import sympy
 from sympy import symbols, Matrix, solve, zeros
 
@@ -62,11 +62,22 @@ def eigen_values(matrix):
     
     identity_subtract_matrix = identity - matrix
     eigen_val = solve(identity_subtract_matrix.det(),x)
-    eigen_val_np = np.array(eigen_val).astype(np.int64)
-    eigen_val_np[::-1].sort()
-    eigen_val = Matrix(eigen_val_np)
+    print("sebelum disort:", eigen_val)
+    eigen_val = eigen_sort(eigen_val)
+    print("sesudah disort:", eigen_val)
+    eigen_val = Matrix(eigen_val)
 
     return eigen_val
+
+
+def eigen_sort(arr):
+    new_arr = []
+    
+    for _ in range(len(arr)):
+        new_arr.append(max(arr))
+        arr.remove(max(arr))
+    
+    return new_arr
 
 
 def create_identity(matrix):
@@ -104,6 +115,6 @@ def singular_values(matrix):
     
     return final_singular_matrix
     
-    
-sample = np.array([[10, 0, 2], [0, 10, 4], [2, 4, 2]])
-print(singular_values(sample))
+# sample adalah matrix AAT yang siap dibuat jadi matriks singular kiri
+# sample = np.array([[96809,65909,70644,0,0,0,0,0,0,0], [65909,98633,58618,0,0,0,0,0,0,0], [70644,58618,82918,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]])
+# print(singular_vectors(sample, True))
