@@ -33,20 +33,111 @@
                 </div>
             </div>
         </nav>
-    </div>
+        
+        {% if filename %}
+        <div class="container d-grid gap-2">
+            <div class="row">
+                <div class="col">
+                    <h2>Before</h2>
+                </div>
+                <div class="col">
+                    <h2>After</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <img src="{{ url_for('display_image', filename=filename) }}" class="img-fluid" alt="">
+                </div>
 
-    <div class="mx-auto d-grid gap-2" style="width: 400px;">
-        <h2 class="text-center ">Welcome to Compressify!</h2>
-        <div class="input-group mb-3">
-            <input type="file" class="form-control" id="inputGroupFile02">
-            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                <div class="col">
+                    <img src="{{ url_for('display_image', filename=filename) }}" class="img-fluid" alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="text-start">
+                        Image pixel difference: <b>50%</b>
+                        <br>Compression runtime: <b>0.5 seconds</b>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="text-end">
+                        <!-- <button type="button" class="btn btn-dark">Download</button> -->
+                        <a href="{{ url_for('display_image', filename=filename) }}" download="proposed_file_name" type="button" class="btn btn-dark">Download</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <label for="customRange2" class="form-label">Image Compression Rate (0-100%):</label>
-        <input type="range" class="form-range" min="0" max="100" id="customRange2">
-        <button type="button" class="btn btn-dark">Compress</button>
-    </div>
-    
+        {% else %}
+        <div class="container d-grid gap-2">
+            <div class="row">
+                <div class="col">
+                    <img src="/static/images/compressify_logo.png" width="465" height="465">
+                </div>
+                <div class="col my-auto">
+                    <h1 >Welcome to Compressify!</h1>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% endwith %}
 
+                    <form method="post" action="/" enctype="multipart/form-data">
+                        <div class="mx-auto d-grid gap-4">
+                            <div class="input-group">
+                                <input type="file" name="file" class="form-control" id="inputGroupFile02" autocomplete="off" required>
+                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                            </div>
+
+                            <!-- <div class="input-group">
+                                <span class="input-group-text">Image Compression Rate (0-100)</span>
+                                <input type="text" aria-label="comp-rate" class="form-control">
+                                <span class="input-group-text">%</span>
+                            </div> -->
+                            <input class="btn btn-dark" type="submit" value="Compress">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <!-- <div class="mx-auto d-grid gap-2" style="width: 465x;">
+            <div class="text-center">
+                <img src="/static/images/compressify_logo.png" width="465" height="465">
+                <h1 >Welcome to Compressify!</h1>
+            </div>
+
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+
+            <form method="post" action="/" enctype="multipart/form-data">
+                <div class="mx-auto d-grid gap-4">
+                    <div class="input-group">
+                        <input type="file" name="file" class="form-control" id="inputGroupFile02" autocomplete="off" required>
+                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-text">Image Compression Rate (0-100)</span>
+                        <input type="text" aria-label="comp-rate" class="form-control">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    <input class="btn btn-dark" type="submit" value="Compress">
+                </div>
+            </form> -->
+        </div>
+        {% endif %}
+    </div>
     
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
