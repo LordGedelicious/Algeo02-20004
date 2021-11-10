@@ -19,3 +19,14 @@ print(numpy.roots(arr))
 
 polynoms = sympy.Poly(x**3 - 278360*x**2 + 12983580912*x - 152533992248140)
 print(polynoms.all_coeffs())
+
+a = sympy.Matrix([[1,-1,2,-1],[2,1,-2,-2],[-1,2,-4,1],[3,0,0,-3]])
+sol, params = a.gauss_jordan_solve(sympy.Matrix([-1,-2,1,-3]))
+print(sol)
+print(params)
+
+a = sympy.Matrix([[1,-1,2,-1],[2,1,-2,-2],[-1,2,-4,1],[3,0,0,-3]])
+v  = a.nullspace()[0]
+x = sympy.lcm([val.q for val in v])
+ans = x*v
+print(ans)

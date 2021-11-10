@@ -1,7 +1,9 @@
+from mpmath.functions.rszeta import zeta_offline
 import numpy as np
 from numpy.core.fromnumeric import sort, transpose
 import sympy
 from sympy import symbols, Matrix, solve, zeros
+from sympy.matrices.dense import ones
 
 
 def singular_vectors(matrix, left=True):
@@ -12,14 +14,13 @@ def singular_vectors(matrix, left=True):
             Argumen matrix berupa matriks ATA dan left = False.\n
         
         Prekondisi: matrix berupa matriks persegi."""
-    print(matrix)
     length, width = matrix.shape
     
     x = symbols('x')
     identity = create_identity(matrix)
     eigen_val = eigen_values(matrix)
-    zero_matrix = zeros(length,1)
-    print(zero_matrix)
+    print(eigen_val)
+    zero_matrix = ones(length,1)
     final_eigen_vector = Matrix([[]])
     
     # menghitung vektor eigen
@@ -29,14 +30,15 @@ def singular_vectors(matrix, left=True):
             for k in range(width):
                 if (identity[j,k] == x or identity[j,k] == eigen_val[0,i-1]):
                     identity[j,k] = eigen_val[0,i]
-        identity_subtract_matrix = identity - matrix
-        solutions, params = identity_subtract_matrix.gauss_jordan_solve(sympy.Matrix([[0],[0],[0]]))
+        identity_subtract_matrix = (identity - matrix)
+        identity_subtract_matrix = sympy.Matrix([[1,-1],[-1,1]])
+        print(identity_subtract_matrix)
+        solutions, params = identity_subtract_matrix.gauss_jordan_solve(zero_matrix)
         print(solutions)
         for p in params:
             # subtitusi 1 ke parameter pada solutions
             partial_solution_temp = solutions.xreplace({p:1})
             partial_solution = partial_solution_temp.xreplace({p:0 for p in params})
-            
             # normalisasi vektor
             vector_len = 0
             for q in partial_solution:
@@ -112,7 +114,12 @@ def singular_values(matrix):
     final_singular_matrix = Matrix(final_singular_matrix)
     
     return final_singular_matrix
+
+
+def gauss_jordan_solutions(matrix):
+    print()
     
 # sample adalah matrix AAT yang siap dibuat jadi matriks singular kiri
 sample = np.array([[96809,65909,70644], [65909,98633,58618], [70644,58618,82918]])
-print(singular_vectors(sample, True))
+sample2 = np.array([[11,1], [1,11]])
+print(singular_vectors(sample2, True))
