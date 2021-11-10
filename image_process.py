@@ -1,19 +1,7 @@
 from PIL import Image
 import numpy as np
-from numpy.core.fromnumeric import shape
 import svd_process
 import time
-
-
-def mulMatrix(m1, m2):
-    m3 = [[0 for _ in range(len(m2[0]))] for _ in range(len(m1))]
-    
-    p = 0
-    for i in range(len(m1)):
-        for j in range(len(m2[0])):
-            for k in range(len(m2)):
-                m3[i][j] += (int(m1[i][k]) * int(m2[k][j]))
-    return m3
 
 
 def rankMatrix(m):
@@ -40,11 +28,22 @@ def rankMatrix(m):
     return rank
             
 
-# def compressMatrix(m, percentage):
-#     k = percentage * rankMatrix(s_matrix) // 100
+def compressMatrix(m_scale, percentage, aat, ata):
+    # hitung matriks U,S,V
+    u_matrix = np.array(svd_process.singular_vectors(aat, True))
+    s_matrix = np.array(svd_process.singular_values(m_scale))
+    v_matrix = np.array(svd_process.singular_vectors(ata, False))
     
-#     # potong matriks
-#     u_matrix = u_matrix
+    # potong matriks sesuai persentase
+    k = percentage * rankMatrix(s_matrix) // 100
+    u_matrix = u_matrix[:,0:k]
+    s_matrix = s_matrix[0:k, 0:k]
+    v_matrix = v_matrix[0:k,:]
+    
+    A = u_matrix @ s_matrix
+    A = A @ v_matrix
+    
+    return A
 
 
 def printMatrixInteger(m):
@@ -74,53 +73,52 @@ def printMatrixInteger(m):
 start_time = time.time()
 
 path = "4-3.png"
+percentage = 100
+
 img = Image.open(path)
 img_mat = np.array(img)
-print(img_mat.shape)
-width = np.size(img_mat, 1)
-length = np.size(img_mat, 0)
+length, width, components = img_mat.shape
 
-# pisah 4 nilai kedalam matrix berbeda
-red_scale = [[0 for _ in range(width)] for _ in range(length)]
-blue_scale = [[0 for _ in range(width)] for _ in range(length)]
-green_scale = [[0 for _ in range(width)] for _ in range(length)]
+# pisah 3 nilai kedalam matrix berbeda
+red_scale = np.array([[0 for _ in range(width)] for _ in range(length)])
+green_scale = np.array([[0 for _ in range(width)] for _ in range(length)])
+blue_scale = np.array([[0 for _ in range(width)] for _ in range(length)])
 
 for i in range(length):
     for j in range(width):
         red_scale[i][j] = img_mat[i][j][0]
-        blue_scale[i][j] = img_mat[i][j][1]
-        green_scale[i][j] = img_mat[i][j][2]
+        green_scale[i][j] = img_mat[i][j][1]
+        blue_scale[i][j] = img_mat[i][j][2]
 
-printMatrixInteger(red_scale)
 # transpose untuk persiapan perkalian
 red_scale_t = np.transpose(red_scale)
-blue_scale_t = np.transpose(blue_scale)
 green_scale_t = np.transpose(green_scale)
-print("="*100)
-printMatrixInteger(red_scale_t)
+blue_scale_t = np.transpose(blue_scale)
 
 # AAT (A x A^T)
-rrt = np.array(mulMatrix(red_scale, red_scale_t))
-bbt = np.array(mulMatrix(blue_scale, blue_scale_t))
-ggt = np.array(mulMatrix(green_scale, green_scale_t))
-print("="*100)
-printMatrixInteger(rrt)
+rrt = red_scale @ red_scale_t
+ggt = green_scale @ green_scale_t
+bbt = blue_scale @ blue_scale_t
 
 # ATA (A^T x A)
-rtr = np.array(mulMatrix(red_scale_t, red_scale))
-btb = np.array(mulMatrix(blue_scale_t, blue_scale))
-gtg = np.array(mulMatrix(green_scale_t, green_scale))
+rtr = red_scale_t @ red_scale
+gtg = green_scale_t @ green_scale
+btb = blue_scale_t @ blue_scale
 
-# hitung matriks U,S,V
-u_r_matrix = svd_process.singular_vectors(rrt, True)
-s_r_matrix = svd_process.singular_values(red_scale)
-v_r_matrix = svd_process.singular_vectors(rtr, False)
+printMatrixInteger(rrt)
+print("="*100)
+printMatrixInteger(rtr)
+print("--- %s seconds ---" % (time.time() - start_time))
 
-print(u_r_matrix)
-print("="*100)
-print(s_r_matrix)
-print("="*100)
-print(v_r_matrix)
+# kompresi matriks
+red_scale_new = compressMatrix(red_scale, percentage, rrt, rtr)
+green_scale_new = compressMatrix(green_scale, percentage, ggt, gtg)
+blue_scale_new = compressMatrix(blue_scale, percentage, bbt, btb)
+
+# satukan ketiga matriks
+img_mat_new = [[[0 for _ in range(3)] for _ in range(len(red_scale_new[0]))] for _ in range(len(red_scale_new))]
+img_new = Image.fromarray(img_mat_new)
+img_new.save("compressed_" + path)
 
 print("--- %s seconds ---" % (time.time() - start_time))
 
