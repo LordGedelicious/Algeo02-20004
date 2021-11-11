@@ -1,6 +1,7 @@
 from mpmath.functions.rszeta import zeta_offline
 import numpy as np
-from numpy.core.fromnumeric import sort, transpose
+from numpy.core.fromnumeric import shape, sort, transpose
+from numpy.core.numeric import full
 import sympy
 from sympy import symbols, Matrix, solve, zeros
 from sympy.matrices.dense import ones
@@ -14,44 +15,45 @@ def singular_vectors(matrix, left=True):
             Argumen matrix berupa matriks ATA dan left = False.\n
         
         Prekondisi: matrix berupa matriks persegi."""
-    length, width = matrix.shape
+    length, _ = matrix.shape
     
     x = symbols('x')
     identity = create_identity(matrix)
     eigen_val = eigen_values(matrix)
-    print(eigen_val)
-    zero_matrix = ones(length,1)
+    zero_matrix = zeros(length,1)
     final_eigen_vector = Matrix([[]])
-    
-    # menghitung vektor eigen
+
     for i in range(eigen_val.cols):
-        # subtitusi x pada identity menjadi nilai eigennya
+        # ganti elemen diagonal dengan nilai eigen ke-i
         for j in range(length):
-            for k in range(width):
-                if (identity[j,k] == x or identity[j,k] == eigen_val[0,i-1]):
-                    identity[j,k] = eigen_val[0,i]
-        identity_subtract_matrix = (identity - matrix)
-        identity_subtract_matrix = sympy.Matrix([[1,-1],[-1,1]])
-        print(identity_subtract_matrix)
+            identity[j,j] = eigen_val[0,i]
+        
+        # lakukan pengurangan kemudian dibulatkan (agar gauss jordan bekerja)
+        identity_subtract_matrix = np.array(identity - matrix).astype(np.float64)
+        identity_subtract_matrix = np.around(identity_subtract_matrix)
+        identity_subtract_matrix = Matrix(identity_subtract_matrix)
+
+        # cari vektor eigen
         solutions, params = identity_subtract_matrix.gauss_jordan_solve(zero_matrix)
-        print(solutions)
-        for p in params:
-            # subtitusi 1 ke parameter pada solutions
-            partial_solution_temp = solutions.xreplace({p:1})
-            partial_solution = partial_solution_temp.xreplace({p:0 for p in params})
-            # normalisasi vektor
-            vector_len = 0
-            for q in partial_solution:
-                vector_len += q ** 2
-            vector_len = (vector_len ** 0.5) ** (-1)
-            partial_solution *= vector_len
+        if (params.shape[0] != 0):
+            for p in params:
+                # subtitusi 1 ke parameter pada solutions
+                partial_solution_temp = solutions.xreplace({p:1})
+                partial_solution = partial_solution_temp.xreplace({p:0 for p in params})
+                # normalisasi vektor
+                vector_len = 0
+                for q in partial_solution:
+                    vector_len += q ** 2
+                vector_len = (vector_len ** 0.5) ** (-1)
+                partial_solution *= vector_len
+                final_eigen_vector = final_eigen_vector.col_insert(length,partial_solution)
+        else:
+            final_eigen_vector = final_eigen_vector.col_insert(length, solutions)
             
-            final_eigen_vector = final_eigen_vector.col_insert(length,partial_solution)
-        print(final_eigen_vector)
     if left:
         return final_eigen_vector
     else:
-        return transpose(final_eigen_vector)
+        return Matrix(transpose(final_eigen_vector))
 
 
 def eigen_values(matrix):
@@ -66,18 +68,8 @@ def eigen_values(matrix):
     eigen_val = sympy.Poly(identity_subtract_matrix.det()).all_coeffs()
     eigen_val_np = np.array(eigen_val).astype(np.float64)
     eigen_val = Matrix([np.roots(eigen_val_np)])
-
+    
     return eigen_val
-
-
-def eigen_sort(mat):
-    for i in range(0,mat.rows):
-        for j in range(0,mat.rows):
-            if mat[i] > mat[j]:
-                temp = mat[i]
-                mat[i] = mat[j]
-                mat[j] = temp
-    return mat
 
 
 def create_identity(matrix):
@@ -105,7 +97,8 @@ def singular_values(matrix):
         
     length, width = matrix.shape
     final_singular_matrix = [[0 for _ in range(width)] for _ in range(length)]
-    eigen_val = eigen_values(matrix)
+    A = matrix.T @ matrix
+    eigen_val = eigen_values(A)
     
     for i in range(min(length, width)):
         if eigen_val[i] != 0:
@@ -115,11 +108,26 @@ def singular_values(matrix):
     
     return final_singular_matrix
 
-
-def gauss_jordan_solutions(matrix):
-    print()
     
-# sample adalah matrix AAT yang siap dibuat jadi matriks singular kiri
-sample = np.array([[96809,65909,70644], [65909,98633,58618], [70644,58618,82918]])
-sample2 = np.array([[11,1], [1,11]])
-print(singular_vectors(sample2, True))
+
+# A adalah matriks yang akan dicari matriks SVD nya
+# 11/11/2021, 10.43 WIB, udah berhasil, kalau matriksnya besar masih ngebug
+A = np.array([[3, 1, 1], [-1, 3, 1]])
+AAT = A @ A.T
+ATA = A.T @ A
+us = singular_vectors(AAT, True)
+ss = singular_values(A)
+vs = singular_vectors(ATA, False)
+print(us)
+print(ss)
+print(vs)
+A = (us @ ss) @ vs
+print(A)
+
+# tes dengan library SVD
+# u,s,v = np.linalg.svd(A, full_matrices=True)
+# print(u)
+# print(s)
+# print(v)
+# B = (u @ s) @ v
+# print(B)

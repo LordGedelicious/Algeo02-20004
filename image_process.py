@@ -30,9 +30,16 @@ def rankMatrix(m):
 
 def compressMatrix(m_scale, percentage, aat, ata):
     # hitung matriks U,S,V
-    u_matrix = np.array(svd_process.singular_vectors(aat, True))
-    s_matrix = np.array(svd_process.singular_values(m_scale))
-    v_matrix = np.array(svd_process.singular_vectors(ata, False))
+    u_matrix = svd_process.singular_vectors(aat, True)
+    s_matrix = svd_process.singular_values(m_scale)
+    v_matrix = svd_process.singular_vectors(ata, False)
+    print("dimensi U:", u_matrix.shape)
+    print(u_matrix)
+    print("dimensi S:", s_matrix.shape)
+    print(s_matrix)
+    print("dimensi V:", v_matrix.shape)
+    print(v_matrix)
+    print("="*100)
     
     # potong matriks sesuai persentase
     k = percentage * rankMatrix(s_matrix) // 100
@@ -42,6 +49,8 @@ def compressMatrix(m_scale, percentage, aat, ata):
     
     A = u_matrix @ s_matrix
     A = A @ v_matrix
+    print("U*S*V = ")
+    print(A)
     
     return A
 
@@ -65,9 +74,7 @@ def printMatrixInteger(m):
         print()
             
 
-# imagePreprocessing("4-3.png")
-# sample = np.array([[10, 0, 2], [0, 10, 4], [0, 0, 1]])
-# print(rankMatrix(sample))
+
 
 # ASUMSI FORMAT GAMBAR JPEG (TIDAK ADA NILAI TRANSPARANSI)
 start_time = time.time()
@@ -90,30 +97,29 @@ for i in range(length):
         green_scale[i][j] = img_mat[i][j][1]
         blue_scale[i][j] = img_mat[i][j][2]
 
-# transpose untuk persiapan perkalian
-red_scale_t = np.transpose(red_scale)
-green_scale_t = np.transpose(green_scale)
-blue_scale_t = np.transpose(blue_scale)
-
 # AAT (A x A^T)
-rrt = red_scale @ red_scale_t
-ggt = green_scale @ green_scale_t
-bbt = blue_scale @ blue_scale_t
+rrt = red_scale @ red_scale.T
+ggt = green_scale @ green_scale.T
+bbt = blue_scale @ blue_scale.T
 
 # ATA (A^T x A)
-rtr = red_scale_t @ red_scale
-gtg = green_scale_t @ green_scale
-btb = blue_scale_t @ blue_scale
+rtr = red_scale.T @ red_scale
+gtg = green_scale.T @ green_scale
+btb = blue_scale.T @ blue_scale
 
-printMatrixInteger(rrt)
+print(red_scale)
 print("="*100)
-printMatrixInteger(rtr)
-print("--- %s seconds ---" % (time.time() - start_time))
+
 
 # kompresi matriks
+
+# dicoba ngekompres matriks merah dulu, klo udah bener, buka si ijo sama biru
+# sementara percentage = 100 dulu.
 red_scale_new = compressMatrix(red_scale, percentage, rrt, rtr)
-green_scale_new = compressMatrix(green_scale, percentage, ggt, gtg)
-blue_scale_new = compressMatrix(blue_scale, percentage, bbt, btb)
+# green_scale_new = compressMatrix(green_scale, percentage, ggt, gtg)
+# blue_scale_new = compressMatrix(blue_scale, percentage, bbt, btb)
+
+print("--- %s seconds ---" % (time.time() - start_time))
 
 # satukan ketiga matriks
 img_mat_new = [[[0 for _ in range(3)] for _ in range(len(red_scale_new[0]))] for _ in range(len(red_scale_new))]
