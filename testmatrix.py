@@ -38,3 +38,20 @@ print(sympy.Matrix([[0,0]]).shape)
 print(sympy.Matrix([0,0]).shape)
 sol, par = a.gauss_jordan_solve(zero_mat)
 print(sol)
+
+# Dump dari svd_process :
+# partial_solution = Matrix([[]])
+# for p in params:
+#     # subtitusi 1 ke parameter pada solutions
+#     partial_solution_temp = solutions.xreplace({p:1})
+#     partial_solution = partial_solution_temp.xreplace({p:0 for p in params})
+#     print("ini partial 1",partial_solution)
+#     # normalisasi vektor
+#     vector_len = 0
+#     for q in partial_solution:
+#         vector_len += q ** 2
+#         vector_len = (vector_len ** 0.5) ** (-1)
+#         partial_solution *= vector_len
+#     print("ini partial 2",partial_solution)
+#     final_eigen_vector = final_eigen_vector.col_insert(length,partial_solution)
+# print(final_eigen_vector)
