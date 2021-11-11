@@ -1,12 +1,11 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
-import urllib.request
 import os
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/uploads/')
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/compressify/original/')
 
 app.secret_key = "pencitraan"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -23,28 +22,23 @@ def home():
 
 @app.route('/', methods=['POST'])
 def upload_image():
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
     file = request.files['file']
-    if file.filename == '':
-        flash('No image selected for uploading')
-        return redirect(request.url)
+    comprate = request.form.get('comp-rate', type=float)
+    if (comprate%1==0):
+        comprate = int(comprate)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
+        print(filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #print('upload_image filename: ' + filename)
-        flash('Image successfully uploaded and displayed below')
-        return render_template('home.html', filename=filename)
+        return render_template('home.html', filename=filename, cprate=comprate)
     else:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
+        flash('Allowed image types are: .png, .jpg, .jpeg, .gif')
         return redirect(request.url)
- 
+
 @app.route('/display/<filename>')
 def display_image(filename):
     #print('display_image filename: ' + filename)
-    return redirect(url_for('static', filename='uploads/' + filename), code=301)
- 
+    return redirect(url_for('static', filename='compressify/original/' + filename), code=301)
 
 @app.route('/how-to-use')
 def howtouse():
@@ -53,6 +47,6 @@ def howtouse():
 @app.route('/about-us')
 def aboutus():
     return render_template("aboutus.html")
-    
+
 if __name__ == "__main__":
     app.run(debug=True)
