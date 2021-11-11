@@ -101,15 +101,19 @@ for i in range(length):
 rrt = red_scale @ red_scale.T
 ggt = green_scale @ green_scale.T
 bbt = blue_scale @ blue_scale.T
+print(rrt)
 
 # ATA (A^T x A)
 rtr = red_scale.T @ red_scale
 gtg = green_scale.T @ green_scale
 btb = blue_scale.T @ blue_scale
-
+print(rtr)
 print(red_scale)
 print("="*100)
-
+# u,s,v = np.linalg.svd(red_scale, full_matrices=True)
+# print(u)
+# print(s)
+# print(v)
 
 # kompresi matriks
 

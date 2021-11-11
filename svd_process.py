@@ -20,6 +20,7 @@ def singular_vectors(matrix, left=True):
     x = symbols('x')
     identity = create_identity(matrix)
     eigen_val = eigen_values(matrix)
+    print(eigen_val.cols)
     zero_matrix = zeros(length,1)
     final_eigen_vector = Matrix([[]])
 
@@ -34,22 +35,13 @@ def singular_vectors(matrix, left=True):
         identity_subtract_matrix = Matrix(identity_subtract_matrix)
 
         # cari vektor eigen
+        tau0 = symbols(['tau0'])
         solutions, params = identity_subtract_matrix.gauss_jordan_solve(zero_matrix)
-        if (params.shape[0] != 0):
-            for p in params:
-                # subtitusi 1 ke parameter pada solutions
-                partial_solution_temp = solutions.xreplace({p:1})
-                partial_solution = partial_solution_temp.xreplace({p:0 for p in params})
-                # normalisasi vektor
-                vector_len = 0
-                for q in partial_solution:
-                    vector_len += q ** 2
-                vector_len = (vector_len ** 0.5) ** (-1)
-                partial_solution *= vector_len
-                final_eigen_vector = final_eigen_vector.col_insert(length,partial_solution)
-        else:
-            final_eigen_vector = final_eigen_vector.col_insert(length, solutions)
-            
+        print(f"solusi ke-{i}:", solutions)
+        print(f"param ke-{i}:",params)
+        for i in params:
+            print(type(i))
+
     if left:
         return final_eigen_vector
     else:
@@ -67,7 +59,10 @@ def eigen_values(matrix):
     identity_subtract_matrix = identity - matrix
     eigen_val = sympy.Poly(identity_subtract_matrix.det()).all_coeffs()
     eigen_val_np = np.array(eigen_val).astype(np.float64)
-    eigen_val = Matrix([np.roots(eigen_val_np)])
+    eigen_valuesssss = np.roots(eigen_val_np)
+    eigen_valuesssss = np.unique(eigen_valuesssss)
+    eigen_valuesssss = np.sort(eigen_valuesssss)[::-1]
+    eigen_val = Matrix([eigen_valuesssss])
     
     return eigen_val
 
@@ -100,7 +95,7 @@ def singular_values(matrix):
     A = matrix.T @ matrix
     eigen_val = eigen_values(A)
     
-    for i in range(min(length, width)):
+    for i in range(eigen_val.cols):
         if eigen_val[i] != 0:
             final_singular_matrix[i][i] = eigen_val[i] ** 0.5
             
@@ -112,20 +107,21 @@ def singular_values(matrix):
 
 # A adalah matriks yang akan dicari matriks SVD nya
 # 11/11/2021, 10.43 WIB, udah berhasil, kalau matriksnya besar masih ngebug
-A = np.array([[3, 1, 1], [-1, 3, 1]])
-AAT = A @ A.T
-ATA = A.T @ A
-us = singular_vectors(AAT, True)
-ss = singular_values(A)
-vs = singular_vectors(ATA, False)
-print(us)
-print(ss)
-print(vs)
-A = (us @ ss) @ vs
-print(A)
+# A = np.array([[3, 1, 1], [-1, 3, 1]])
+# AAT = A @ A.T
+# ATA = A.T @ A
+# us = singular_vectors(AAT, True)
+# ss = singular_values(A)
+# vs = singular_vectors(ATA, False)
+# print(us)
+# print(ss)
+# print(vs)
+# A = (us @ ss) @ vs
+# print(A)
 
-# tes dengan library SVD
-# u,s,v = np.linalg.svd(A, full_matrices=True)
+# C = np.array([[3, 1, 1], [-1, 3, 1]])
+# # tes dengan library SVD
+# u,s,v = np.linalg.svd(C, full_matrices=True)
 # print(u)
 # print(s)
 # print(v)
