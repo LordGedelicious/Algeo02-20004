@@ -33,13 +33,6 @@ def compressMatrix(m_scale, percentage, aat, ata):
     u_matrix = svd_process.singular_vectors(aat, True)
     s_matrix = svd_process.singular_values(m_scale)
     v_matrix = svd_process.singular_vectors(ata, False)
-    print("dimensi U:", u_matrix.shape)
-    print(u_matrix)
-    print("dimensi S:", s_matrix.shape)
-    print(s_matrix)
-    print("dimensi V:", v_matrix.shape)
-    print(v_matrix)
-    print("="*100)
     
     # potong matriks sesuai persentase
     k = percentage * rankMatrix(s_matrix) // 100
@@ -49,8 +42,6 @@ def compressMatrix(m_scale, percentage, aat, ata):
     
     A = u_matrix @ s_matrix
     A = A @ v_matrix
-    print("U*S*V = ")
-    print(A)
     
     return A
 
@@ -101,15 +92,12 @@ for i in range(length):
 rrt = red_scale @ red_scale.T
 ggt = green_scale @ green_scale.T
 bbt = blue_scale @ blue_scale.T
-print(rrt)
 
 # ATA (A^T x A)
 rtr = red_scale.T @ red_scale
 gtg = green_scale.T @ green_scale
 btb = blue_scale.T @ blue_scale
-print(rtr)
-print(red_scale)
-print("="*100)
+
 # u,s,v = np.linalg.svd(red_scale, full_matrices=True)
 # print(u)
 # print(s)

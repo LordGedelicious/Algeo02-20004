@@ -20,7 +20,6 @@ def singular_vectors(matrix, left=True):
     x = symbols('x')
     identity = create_identity(matrix)
     eigen_val = eigen_values(matrix)
-    print(eigen_val.cols)
     zero_matrix = zeros(length,1)
     final_eigen_vector = Matrix([[]])
 
@@ -29,6 +28,8 @@ def singular_vectors(matrix, left=True):
         for j in range(length):
             identity[j,j] = eigen_val[0,i]
         
+        print(identity)
+
         # lakukan pengurangan kemudian dibulatkan (agar gauss jordan bekerja)
         identity_subtract_matrix = np.array(identity - matrix).astype(np.float64)
         identity_subtract_matrix = np.around(identity_subtract_matrix)
@@ -37,10 +38,6 @@ def singular_vectors(matrix, left=True):
         # cari vektor eigen
         tau0 = symbols(['tau0'])
         solutions, params = identity_subtract_matrix.gauss_jordan_solve(zero_matrix)
-        print(f"solusi ke-{i}:", solutions)
-        print(f"param ke-{i}:",params)
-        for i in params:
-            print(type(i))
 
     if left:
         return final_eigen_vector
@@ -63,7 +60,6 @@ def eigen_values(matrix):
     eigen_valuesssss = np.unique(eigen_valuesssss)
     eigen_valuesssss = np.sort(eigen_valuesssss)[::-1]
     eigen_val = Matrix([eigen_valuesssss])
-    
     return eigen_val
 
 
