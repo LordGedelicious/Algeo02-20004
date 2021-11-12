@@ -32,9 +32,7 @@ def home():
 def process_image():
     # GET REQUEST FILE DAN COMPRESSION RATE
     file = request.files['file']
-    comprate = request.form.get('comp-rate', type=float)
-    if (comprate%1==0):
-        comprate = int(comprate)
+    comprate = request.form.get('comp-rate', type=int)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['ORIGINAL_FOLDER'], filename))
