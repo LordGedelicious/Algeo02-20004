@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='stylesheet' href='/static/bootstrap/css/bootstrap.min.css'>
+    <link rel="icon" href="/static/images/compressify_icon.ico" type="image/x-icon"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compressify</title>
+    <style>
+        body {
+            background-image: url("/static/images/bg_triangles.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div class="wrapper flex-grow-1">
+        <div class="container">
+            <header>
+                <nav class="navbar navbar-expand-xl navbar-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="{{ url_for('home') }}">
+                            <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+                            Compressify</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarText">
+                            <ul class="navbar-nav ms-auto text-center">
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('howtouse') }}">How to Use</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('aboutus') }}">About Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <content>
+                <div class="d-grid gap-5">
+                    {% if not filename %}
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    {% endif %}
+                    <div class="row"></div>
+                    <div class="row">
+                        {% if filename %}
+                        <div class="container d-grid gap-3">
+                            <div class="row">
+                                <div class="col">
+                                    <h2>Before</h2>
+                                </div>
+                                <div class="col">
+                                    <h2>After</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col text-center">
+                                    <img src="{{ url_for('display_org', filename=filename) }}" class="img-fluid" alt="">
+                                </div>
+
+                                <div class="col text-center">
+                                    <img src="{{ url_for('display_comp', filename=filename) }}" class="img-fluid" alt="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-start">
+                                        Compression result: <b>{{ cprate }}%</b>
+                                        <br>Compression runtime: <b>{{ runtime }} seconds</b>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="text-end">
+                                        <a href="{{ url_for('display_comp', filename=filename) }}" download="proposed_file_name" type="button" class="btn btn-dark">Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2>Happy with your result?</h2>
+                                <a href="{{ url_for('home') }}" type="button" class="btn btn-dark">Compress another image!</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-4">
+                                    <a href="{{ url_for('home') }}"><img src="/static/images/compressify_logo.png" class="img-fluid" alt=""></a>
+                                </div>
+                                <div class="col-lg-5 my-auto d-grid gap-2">
+                                    <div class="">
+                                        <h1 >Welcome to Compressify!</h1>
+                                    </div>
+                        
+                                        {% with messages = get_flashed_messages() %}
+                                        {% if messages %}
+                                            <ul>
+                                            {% for message in messages %}
+                                            <li>{{ message }}</li>
+                                            {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                        {% endwith %}
+                        
+                                    <form method="post" action="/" enctype="multipart/form-data">
+                                        <div class="d-grid gap-2">
+                                            <div class="input-group">
+                                                <input type="file" name="file" class="form-control" id="inputGroupFile02" autocomplete="off" required accept=".png,.jpg,.jpeg,.gif">
+                                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                            </div>
+                        
+                                            <div class="input-group">
+                                                <span class="input-group-text">Image Compression Rate (0-100)</span>
+                                                <input type="number" name="comp-rate" class="form-control" autocomplete="off" required min="0" max="100" step="0.1">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                            <input class="btn btn-dark" type="submit" value="Compress">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-1"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row"></div>
+                </div>
+            </content>
+        </div>
+    </div>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="container">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="{{ url_for('home') }}" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="bi">
+                    <span class="text-muted">© 2021 | The penCITRAan Team</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
