@@ -1,13 +1,9 @@
 from PIL import Image
-import PIL
-import os
-import glob
-from os.path import join, dirname, realpath
-
-file_name = "sudah submisi.PNG"
-picture = Image.open(join(dirname(realpath(__file__)), file_name))
-print(f"The image size dimensions are: {picture.size}")
+from os.path import join
 
 
-print(join(dirname(realpath(__file__)), file_name))
-picture.save(join(dirname(realpath(__file__)), "compressed_"+file_name),optimize=True,quality=30) 
+def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix):
+    picture = Image.open(join(original_realpath, file_name))
+
+    picture.save(join(compressed_realpath, prefix+file_name),optimize=True,quality=cprate) 
+    picture.close()

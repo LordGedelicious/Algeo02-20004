@@ -7,36 +7,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How to Use | Compressify</title>
+    <style>
+        body {
+            background-image: url("/static/images/bg_triangles.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
-<body>
-    <div class="container d-grid gap-5">
-        <nav class="navbar navbar-expand-xl navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url_for('home') }}">
-                    <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-                    Compressify</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav ms-auto text-center">
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">How to Use</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('aboutus') }}">About Us</a>
-                    </li>
-                </ul>
-                </div>
-            </div>
-        </nav>
+<body class="d-flex flex-column min-vh-100">
+    <div class="wrapper flex-grow-1">
+        <div class="container">
+            <header>
+                <nav class="navbar navbar-expand-xl navbar-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="{{ url_for('home') }}">
+                            <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+                            Compressify</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarText">
+                            <ul class="navbar-nav ms-auto text-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{{ url_for('howtouse') }}">How to Use</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('aboutus') }}">About Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <content>
+
+            </content>
+        </div>
     </div>
-
-    
-
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="container">
+            <div class="col-md-5 d-flex align-items-center">
+                <a href="{{ url_for('home') }}" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="bi rounded">
+                    <span class="text-muted">© 2021 | The penCITRAan Team</span>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>

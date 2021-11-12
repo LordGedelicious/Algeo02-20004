@@ -7,63 +7,161 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Compressify</title>
+    <style>
+        body {
+            background-image: url("/static/images/bg_triangles.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <nav class="navbar navbar-expand-xl navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url_for('home') }}">
-                    <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-                    Compressify</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav ms-auto text-center">
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('howtouse') }}">How to Use</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">About Us</a>
-                    </li>
-                </ul>
+<body class="d-flex flex-column min-vh-100">
+    <div class="wrapper flex-grow-1">
+        <div class="container">
+            <header>
+                <nav class="navbar navbar-expand-xl navbar-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="{{ url_for('home') }}">
+                            <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+                            Compressify</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarText">
+                            <ul class="navbar-nav ms-auto text-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('howtouse') }}">How to Use</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{{ url_for('aboutus') }}">About Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <content>
+                <div class="d-grid gap-5">
+                    <div class="row"></div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-3">
+                            <a href="{{ url_for('home') }}"><img src="/static/images/compressify_logo.png" class="img-fluid"></a>
+                        </div>
+                        <div class="col-lg-3 my-auto">
+                            <p class="h1">Introducing, Compressify!</p>
+                        </div>
+                        <div class="col-lg-3"></div>
+                    </div>
+
+                    <figure class="text-center">
+                        <blockquote class="blockquote">
+                        <p>Gone are the days of lossless and big image files that hogs up your precious hard drive space!</p>
+                        </blockquote>
+                        <figcaption class="blockquote-footer">
+                        The penCITRAan Team <cite title="Source Title">2021</cite>
+                        </figcaption>
+                    </figure>
                 </div>
-            </div>
-        </nav>
-
-        <div class="d-grid gap-5">
-            <div class="row justify-content-md-center">
-                    <div class="col col-lg-3">
-                        <a href="{{ url_for('home') }}"><img src="/static/images/compressify_logo.png" width="250" height="250"></a>
+                <p>
+                    We have all gone around the internet searching for that good meme which tingles our meme hearts. Whether it be
+                    something you've seen in a recent PewDiePie video, accidentaly stumbling upon it on an Instagram post, 
+                    or making the effort to actually search for memes like a real memelord on the r/dankmemes subreddit, we all are a creature
+                    desperate for the need of memes. Whenever we see a meme we like, we express our gratitute for the meme by laughing ourselves out loud.
+                    It is then not uncommon for us to want to share this meme that made us laugh ourselves off, to our friends, our fellow memesters.
+                </p>
+                <p>
+                    Problem is... 
+                </p>
+                <p>
+                    Sometimes that meme image that we wanted to share to our fellow memesters takes up a gazillion of space, having a file size
+                    somehow approaching close to infinity. This shocking revelation may and a lot of the time shatter our meme hearts and leave us feel disheartened.
+                </p>
+                <p>
+                    <b>This is where we come in!</b>
+                </p>
+                <p>
+                    We, the peNCITRAan Team, had noticed this growing problem over the past few years. More and more, image file sizes had grown at a multitude of levels
+                    beyond what it used to be and it is not stopping any time soon. Something had to be done, and that something had to be done fast! If we do not solve
+                    this problem now, it will become harder to solve lather on. 
+                </p>
+                <p>
+                    And that's what we did! We came up with an idea so original that it even blew our own minds off...
+                </p>
+                <figure class="text-center">
+                    <blockquote class="blockquote">
+                      <p>"What if we found a way to reduce the size of these images by means of compression?"</p>
+                    </blockquote>
+                  </figure>
+                  <p>
+                    This simple question acted as a catalyst for us moving forward. Through countless hours of enduring pain and many more of endless exploration, we struggled
+                    our way back and forth in order for us to reach our final goal. A program to compress an image file. The holy grail itself. At the end, what we found to be
+                    THE WAY to compress an image was through the use of Singular Value Decomposition (SVD). Through the manipulation of matrices which represented every color and every
+                    pixel of an image, it turned out to be the surefire method for us to effectively compress an image file.
+                </p>
+                <p>
+                    This program and project would not be possible if it weren't for the amazing team of coders and thinkers behind it.
+                </p>
+                <p></p>
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="text-center">The penCITRAan Team</h1>
+                        <div class="row">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2 d-grid gap-2">
+                                <img src="/static/images/pencitraan_gede.jpg" class="img-fluid rounded-pill" alt="gede" />
+                                <div>
+                                    <h4>Gede Prasidha Bhawarnawa</h4>
+                                    <p class="lead"><i>13520004</i></p>
+                                    <a href="http://www.instagram.com/gedeprasidha" target="_blank"><img src="/static/images/logo_ig.png"  width="30" height="30"/></a>
+                                    <a href="http://github.com/LordGedelicious" target="_blank"><img src="/static/images/logo_github.png"  width="30" height="30"/></a>
+                                    <a href="http://www.linkedin.com/in/gedeprasidha" target="_blank"><img src="/static/images/logo_linkedin.png"  width="30" height="30"/></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-2 d-grid gap-2">
+                                <img src="/static/images/pencitraan_helmi.jpg" class="img-fluid rounded-pill" alt="helmi" />
+                                <div>
+                                    <h4>Muhammad Helmi Hibatullah</h4>
+                                    <p class="lead"><i>13520014</i></p>
+                                    <a href="http://www.instagram.com/m_helmi_h" target="_blank"><img src="/static/images/logo_ig.png"  width="30" height="30"/></a>
+                                    <a href="http://github.com/mhelmih" target="_blank"><img src="/static/images/logo_github.png"  width="30" height="30"/></a>
+                                    <a href="http://www.linkedin.com/in/mhelmih" target="_blank"><img src="/static/images/logo_linkedin.png"  width="30" height="30"/></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-2 d-grid gap-2">
+                                <img src="/static/images/pencitraan_afan.jpg" class="img-fluid rounded-pill" alt="afan" />
+                                <div>
+                                    <h4>Ahmad Alfani Handoyo</h4>
+                                    <p class="lead"><i>13520023</i></p>
+                                    <a href="http://www.instagram.com/afanhandoyo/" target="_blank"><img src="/static/images/logo_ig.png"  width="30" height="30"/></a>
+                                    <a href="http://github.com/blueguy42" target="_blank"><img src="/static/images/logo_github.png"  width="30" height="30"/></a>
+                                    <a href="http://www.linkedin.com/in/ahmad-alfani-handoyo" target="_blank"><img src="/static/images/logo_linkedin.png"  width="30" height="30"/></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
                     </div>
-                    <div class="col col-lg-3 my-auto">
-                        <p class="h1">Introducing, Compressify!</p>
-                    </div>
-            </div>
+                </div>
 
-            <figure class="text-center">
-                <blockquote class="blockquote">
-                <p>Gone are the days of lossless and big image files that hogs up your precious hard drive space!</p>
-                </blockquote>
-                <figcaption class="blockquote-footer">
-                The penCITRAan Team <cite title="Source Title">2021</cite>
-                </figcaption>
-            </figure>
+            </content>
         </div>
-        <p>
-            We have all gone around the internet searching for that good meme which tingles our meme hearts. Whether it be
-            something you've seen in a recent PewDiePie video, accidentaly stumbling upon it on an Instagram post, 
-            or making the effort to actually search for memes like a real memelord on the r/dankmemes subreddit, we all are a creature
-            desperate for the need of memes. Whenever we see a meme we like, we express our gratitute for the meme by laughing ourselves out loud.
-            It is then not uncommon
-        </p>
-
-
     </div>
-
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="container">
+            <div class="col-md-5 d-flex align-items-center">
+                <a href="{{ url_for('home') }}" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img src="/static/images/compressify_logo.png" alt="" width="30" height="30" class="bi rounded">
+                    <span class="text-muted">© 2021 | The penCITRAan Team</span>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>

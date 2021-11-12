@@ -2,13 +2,21 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 import os
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
+from Compressor import compressor
+import timeit
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=join(dirname(realpath(__file__)), 'static/'))
 
-UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/compressify/original/')
+
+ORIGINAL_FOLDER = join(dirname(realpath(__file__)), 'static/original/')
+os.makedirs(ORIGINAL_FOLDER, exist_ok=True)
+COMPRESSED_FOLDER = join(dirname(realpath(__file__)), 'static/compressed/')
+os.makedirs(COMPRESSED_FOLDER, exist_ok=True)
 
 app.secret_key = "pencitraan"
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['ORIGINAL_FOLDER'] = ORIGINAL_FOLDER
+app.config['COMPRESSED_FOLDER'] = COMPRESSED_FOLDER
+app.config['PREFIX_COMP'] = "compressed_"
 app.config['MAX_CONTENT_LENGTH'] = 120 * 1024 * 1024
  
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -21,24 +29,36 @@ def home():
     return render_template("home.html")
 
 @app.route('/', methods=['POST'])
-def upload_image():
+def process_image():
     file = request.files['file']
     comprate = request.form.get('comp-rate', type=float)
     if (comprate%1==0):
         comprate = int(comprate)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        print(filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return render_template('home.html', filename=filename, cprate=comprate)
+        file.save(os.path.join(app.config['ORIGINAL_FOLDER'], filename))
+
+        # MASUKKAN COMPRESSOR SVD DISINI
+        start = timeit.default_timer()
+        compressor(app.config['ORIGINAL_FOLDER'], app.config['COMPRESSED_FOLDER'], filename, comprate, app.config['PREFIX_COMP'])
+        stop = timeit.default_timer()
+        runtime = round(stop-start, 4)
+        original_size = os.path.getsize(app.config['ORIGINAL_FOLDER'] + filename)
+        compressed_size = os.path.getsize(app.config['COMPRESSED_FOLDER'] + app.config['PREFIX_COMP'] + filename)
+        ratio_size = round((100*compressed_size)/original_size, 2)
+
+        return render_template('home.html', filename=filename, cprate=ratio_size, runtime=runtime)
     else:
         flash('Allowed image types are: .png, .jpg, .jpeg, .gif')
         return redirect(request.url)
 
-@app.route('/display/<filename>')
-def display_image(filename):
-    #print('display_image filename: ' + filename)
-    return redirect(url_for('static', filename='compressify/original/' + filename), code=301)
+@app.route('/original/<filename>')
+def display_org(filename):
+    return redirect(url_for('static', filename='original/' + filename), code=301)
+
+@app.route('/compressed/<filename>')
+def display_comp(filename):
+    return redirect(url_for('static', filename='compressed/' + app.config['PREFIX_COMP']+ filename), code=301)
 
 @app.route('/how-to-use')
 def howtouse():
