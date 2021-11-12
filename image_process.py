@@ -31,19 +31,22 @@ def rankMatrix(m):
 def compressMatrix(m_scale, percentage, aat, ata):
     # hitung matriks U,S,V
     u_matrix = svd_process.singular_vectors(aat, True)
-    s_matrix = svd_process.singular_values(m_scale)
-    v_matrix = svd_process.singular_vectors(ata, False)
-    
+
+    # Nanti kalau SVDnya kelar, jangan lupa buat uncomment si s_matrix sama v_matrix
+
+    # s_matrix = svd_process.singular_values(m_scale)
+    # v_matrix = svd_process.singular_vectors(ata, False)
+
     # potong matriks sesuai persentase
-    k = percentage * rankMatrix(s_matrix) // 100
-    u_matrix = u_matrix[:,0:k]
-    s_matrix = s_matrix[0:k, 0:k]
-    v_matrix = v_matrix[0:k,:]
+    # k = percentage * rankMatrix(s_matrix) // 100
+    # u_matrix = u_matrix[:,0:k]
+    # s_matrix = s_matrix[0:k, 0:k]
+    # v_matrix = v_matrix[0:k,:]
     
-    A = u_matrix @ s_matrix
-    A = A @ v_matrix
+    # A = u_matrix @ s_matrix
+    # A = A @ v_matrix
     
-    return A
+    # return A
 
 
 def printMatrixInteger(m):
@@ -98,10 +101,12 @@ rtr = red_scale.T @ red_scale
 gtg = green_scale.T @ green_scale
 btb = blue_scale.T @ blue_scale
 
-# u,s,v = np.linalg.svd(red_scale, full_matrices=True)
-# print(u)
-# print(s)
-# print(v)
+print(red_scale)
+
+u,s,v = np.linalg.svd(red_scale, full_matrices=True)
+print(u)
+print(s)
+print(v)
 
 # kompresi matriks
 
