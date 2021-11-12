@@ -31,28 +31,22 @@ def rankMatrix(m):
 def compressMatrix(m_scale, percentage, aat, ata):
     # hitung matriks U,S,V
     u_matrix = svd_process.singular_vectors(aat, True)
-    s_matrix = svd_process.singular_values(m_scale)
-    v_matrix = svd_process.singular_vectors(ata, False)
-    print("dimensi U:", u_matrix.shape)
-    print(u_matrix)
-    print("dimensi S:", s_matrix.shape)
-    print(s_matrix)
-    print("dimensi V:", v_matrix.shape)
-    print(v_matrix)
-    print("="*100)
-    
+
+    # Nanti kalau SVDnya kelar, jangan lupa buat uncomment si s_matrix sama v_matrix
+
+    # s_matrix = svd_process.singular_values(m_scale)
+    # v_matrix = svd_process.singular_vectors(ata, False)
+
     # potong matriks sesuai persentase
-    k = percentage * rankMatrix(s_matrix) // 100
-    u_matrix = u_matrix[:,0:k]
-    s_matrix = s_matrix[0:k, 0:k]
-    v_matrix = v_matrix[0:k,:]
+    # k = percentage * rankMatrix(s_matrix) // 100
+    # u_matrix = u_matrix[:,0:k]
+    # s_matrix = s_matrix[0:k, 0:k]
+    # v_matrix = v_matrix[0:k,:]
     
-    A = u_matrix @ s_matrix
-    A = A @ v_matrix
-    print("U*S*V = ")
-    print(A)
+    # A = u_matrix @ s_matrix
+    # A = A @ v_matrix
     
-    return A
+    # return A
 
 
 def printMatrixInteger(m):
@@ -101,19 +95,18 @@ for i in range(length):
 rrt = red_scale @ red_scale.T
 ggt = green_scale @ green_scale.T
 bbt = blue_scale @ blue_scale.T
-print(rrt)
 
 # ATA (A^T x A)
 rtr = red_scale.T @ red_scale
 gtg = green_scale.T @ green_scale
 btb = blue_scale.T @ blue_scale
-print(rtr)
+
 print(red_scale)
-print("="*100)
-# u,s,v = np.linalg.svd(red_scale, full_matrices=True)
-# print(u)
-# print(s)
-# print(v)
+
+u,s,v = np.linalg.svd(red_scale, full_matrices=True)
+print(u)
+print(s)
+print(v)
 
 # kompresi matriks
 
