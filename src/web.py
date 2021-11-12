@@ -7,7 +7,7 @@ import timeit
 
 app = Flask(__name__, static_folder=join(dirname(realpath(__file__)), 'static/'))
 
-
+# MEMBUAT DIR KALAU BELUM ADA
 ORIGINAL_FOLDER = join(dirname(realpath(__file__)), 'static/original/')
 os.makedirs(ORIGINAL_FOLDER, exist_ok=True)
 COMPRESSED_FOLDER = join(dirname(realpath(__file__)), 'static/compressed/')
@@ -30,6 +30,7 @@ def home():
 
 @app.route('/', methods=['POST'])
 def process_image():
+    # GET REQUEST FILE DAN COMPRESSION RATE
     file = request.files['file']
     comprate = request.form.get('comp-rate', type=float)
     if (comprate%1==0):
