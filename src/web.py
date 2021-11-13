@@ -38,7 +38,9 @@ def process_image():
 
         # FUNGSI COMPRESSOR MENGEMBALIKAN DUA NILAI: "return (runtime, comprate)"
         runtime, comprate = compressor(app.config['ORIGINAL_FOLDER'], app.config['COMPRESSED_FOLDER'], filename, comprate, app.config['PREFIX_COMP'])
-
+        runtime = round(runtime, 4)
+        comprate = round(comprate, 2)
+        
         return render_template('home.html', filename=filename, runtime=runtime, cprate=comprate)
     else:
         flash('Allowed image types are: .png, .jpg, .jpeg, .gif')
