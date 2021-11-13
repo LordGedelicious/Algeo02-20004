@@ -37,16 +37,10 @@ def process_image():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['ORIGINAL_FOLDER'], filename))
 
-        # MASUKKAN COMPRESSOR SVD DISINI
-        start = timeit.default_timer()
-        compressor(app.config['ORIGINAL_FOLDER'], app.config['COMPRESSED_FOLDER'], filename, comprate, app.config['PREFIX_COMP'])
-        stop = timeit.default_timer()
-        runtime = round(stop-start, 4)
-        original_size = os.path.getsize(app.config['ORIGINAL_FOLDER'] + filename)
-        compressed_size = os.path.getsize(app.config['COMPRESSED_FOLDER'] + app.config['PREFIX_COMP'] + filename)
-        ratio_size = round((100*compressed_size)/original_size, 2)
+        # FUNGSI COMPRESSOR MENGEMBALIKAN DUA NILAI: "return (runtime, comprate)"
+        runtime, comprate = compressor(app.config['ORIGINAL_FOLDER'], app.config['COMPRESSED_FOLDER'], filename, comprate, app.config['PREFIX_COMP'])
 
-        return render_template('home.html', filename=filename, cprate=ratio_size, runtime=runtime)
+        return render_template('home.html', filename=filename, runtime=runtime, cprate=comprate)
     else:
         flash('Allowed image types are: .png, .jpg, .jpeg, .gif')
         return redirect(request.url)
