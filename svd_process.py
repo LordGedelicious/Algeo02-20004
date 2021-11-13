@@ -69,7 +69,13 @@ def create_identity(matrix):
     """ Fungsi mengembalikan matriks identitas
         yang tiap angka 1 diganti dengan simbol x.
         
-        Prekondisi: matrix berupa matriks persegi."""
+        Prekondisi: matrix berupa matriks persegi.
+        Contoh: misalkan matrix memiliki ukuran 3x3
+                maka outputnya merupakan matriks berikut.
+                [[x, 0, 0],
+                 [0, x, 0],
+                 [0, 0, x]]
+    """
         
     length, width = matrix.shape
     identity = Matrix.eye(length)
@@ -84,9 +90,7 @@ def create_identity(matrix):
 
 def singular_values(matrix):
     """ Fungsi mengembalikan matriks berisi
-        nilai-nilai singular.
-        
-        Prekondisi: matrix berupa matriks persegi."""
+        nilai-nilai singular."""
         
     length, width = matrix.shape
     final_singular_matrix = [[0 for _ in range(width)] for _ in range(length)]
