@@ -3,7 +3,6 @@ import os
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
 from compressor import compressor
-import timeit
 
 app = Flask(__name__, static_folder=join(dirname(realpath(__file__)), 'static/'))
 
