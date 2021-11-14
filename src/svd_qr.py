@@ -6,7 +6,7 @@ def svd(matrix):
     A = matrix.transpose() @ matrix
 
     # QR ALGORITHM AT*A untuk konvergen mendapatkan eigenvalue A dan eigenvector V
-    for i in range(1):
+    for i in range(40):
         # DIGUNAKAN BUILT-IN FUNGSI QR DECOMPOSITION, asumsi boleh karena tidak langsung menghasilkan SVD
         Q, R = np.linalg.qr(A)
         A = R @ Q
