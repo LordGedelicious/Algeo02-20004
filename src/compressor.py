@@ -27,10 +27,10 @@ def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix
     print("ukuran matriks:", img_array.shape)
     
     # Cek length dan width dari gambar untuk menghitung k
-    if img_array.ndim == 2:
-        length, width = img_array.shape
-    else:
-        length, width, _ = img_array.shape
+    # if img_array.ndim == 2:
+    #     length, width = img_array.shape
+    # else:
+    length, width, _ = img_array.shape
     max_rank = max(length, width)
     k = (cprate * max_rank) // 100
 
@@ -38,18 +38,18 @@ def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix
     img_compressed = svd_qr.matriximage(img_array, k)
 
     # Buat kembali gambar dari matriks
-    img_out = Image.fromarray(img_compressed, mode=im_mode)
+    img_out = Image.fromarray(img_compressed, mode=img_in.mode)
     
     # Jika mode gambar awalnya adalah P atau PA, ubah kembali
     # menjadi P atau PA
     if im_mode == 'L':
-        img_in = img_in.convert('L')
+        img_out = img_out.convert('L')
     elif im_mode == 'LA':
-        img_in = img_in.convert('LA')
+        img_out = img_out.convert('LA')
     elif im_mode == 'P':
-        img_in = img_out.convert('P')
+        img_out = img_out.convert('P')
     elif im_mode == 'PA':
-        img_in = img_out.convert('PA')
+        img_out = img_out.convert('PA')
     
     # Save
     img_out.save(join(compressed_realpath, prefix + file_name))
