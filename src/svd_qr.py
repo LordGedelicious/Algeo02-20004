@@ -32,6 +32,7 @@ def svd(matrix):
 
 # TO PROCESSS THE DIFFERENT COLOR CHANNELS
 # SUPPORT L, LA, RGB, RGBA, CMYK
+# P and PA needs to be converted to RGB first
 def matriximage(colormatrix, rank):
     m = colormatrix.shape[0]
     n = colormatrix.shape[1]
