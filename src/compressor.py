@@ -26,7 +26,7 @@ def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix
     
     # Cek length dan width dari gambar untuk menghitung k
     length, width, _ = img_array.shape
-    max_rank = max(length, width)
+    max_rank = min(length, width)
     k = (cprate * max_rank) // 100
 
     # Hitung kompresi gambar dengan SVD
