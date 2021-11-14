@@ -14,6 +14,8 @@ def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix
     im_mode = img_in.mode
     if im_mode == 'L':
         img_in = img_in.convert('RGB')
+    elif im_mode == 'LA':
+        img_in = img_in.convert('RGBA')
     elif im_mode == 'P':
         img_in = img_in.convert('RGB')
     elif im_mode == 'PA':
@@ -37,6 +39,8 @@ def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix
     # menjadi L, P, atau PA
     if im_mode == 'L':
         img_out = img_out.convert('L')
+    elif im_mode == 'LA':
+        img_out = img_out.convert('LA')
     elif im_mode == 'P':
         img_out = img_out.convert('P')
     elif im_mode == 'PA':

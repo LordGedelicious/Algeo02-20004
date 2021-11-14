@@ -16,7 +16,7 @@ def svd(matrix):
             V = V @ Q   # iterasi selanjutnya V = Q1 * Q2 ... * QN
 
     # DAPATKAN SIGMA
-    sigma = np.diag(np.sqrt(np.absolute(np.diagonal(A))))
+    sigma = np.diag(np.clip(np.sqrt(np.absolute(np.diagonal(A))), 1e-4,np.Inf))
 
     # Hitung inv(sigma) untuk menemukan U
     invsigma = np.linalg.inv(sigma)
