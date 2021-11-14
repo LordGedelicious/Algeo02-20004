@@ -7,6 +7,7 @@ Aplikasi Nilai Eigen dan Vektor Eigen dalam Kompresi Gambar
 
 ## Table of Contents
 * [Informasi Umum](#informasi-umum)
+* [Anggota Kelompok](#anggota-kelompok-pencitraan)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
@@ -19,6 +20,14 @@ Aplikasi Nilai Eigen dan Vektor Eigen dalam Kompresi Gambar
 
 ## Informasi Umum
 Pada Tugas Besar 2 IF 2123 Aljabar Linier dan Geometri kali ini kita diminta untuk membuat sebuah program kompresi gambar dengan memanfaatkan Singular Value Decomposition (SVD) yang berjalan di suatu web lokal sederhana.
+
+## Anggota Kelompok - penCITRAan
+| Nama                           | NIM      |
+| ------------------------------ | -------- |
+| Ahmad Alfani Handoyo           | 13520023 |
+| Muhammad Garebaldhie ER Rahman | 13520029 |
+| Aditya Prawira Nugroho         | 13520049 |
+| Felicia Sutandijo              | 13520050 |
 
 # 1. Baca Image ***UDAH KELAR***
 # 2. Ubah pixel value (RGBA + Grayscale) ke matriks secara terpisah
