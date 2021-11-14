@@ -10,7 +10,6 @@ Aplikasi Nilai Eigen dan Vektor Eigen dalam Kompresi Gambar
 * [Fitur](#fitur)
 * [Setup](#setup)
 * [Penggunaan](#penggunaan)
-* [Cara](#room-for-improvement)
 
 ## Informasi Umum
 Pada Tugas Besar 2 IF 2123 Aljabar Linier dan Geometri kali ini kita diminta untuk membuat sebuah program kompresi gambar dengan memanfaatkan Singular Value Decomposition (SVD) yang berjalan di suatu web lokal sederhana. 
@@ -29,7 +28,7 @@ Algoritma yang digunakan untuk mencari nilai dan vektor eigen untuk membentuk ma
 * <b>numpy v.1.21.4</b>: untuk melakukan operasi-operasi pada matriks, array, dan operasi matematika lainnya
 * <b>Pillow v.8.4.0</b>: untuk segala pemrosesan gambar termasuk mengkonversinya menjadi matriks dan sebaliknya dan mengetahui mode warna yang digunakan
 * <b>Flask v.2.0.2</b>: untuk menghubungkan program Python pada backend dengan frontend website dan request dari keduanya
-* <b>Bootstrap v5.1.3</b>: untuk membangun web yang elegan dan dengan cepat.
+* <b>Bootstrap v5.1.3</b>: untuk membangun web yang elegan dan dengan cepat. (Tidak perlu diinstall lagi karena sudah terdapat pada folder `/src/static/bootstrap`)
 
 ## Fitur
 Beberapa fitur yang dapat diakses oleh user saat menggunakan website/program:
@@ -65,4 +64,14 @@ Pada terminal Python akan ada munculan sebagai berikut:
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 Untuk mengakses website, akses link yang terdapat pada baris terbawah (yang pada kasus ini adalah `http://127.0.0.1:5000/`) pada web browser pilihan Anda. Selamat! Sekarang Anda dapat menjalankan website kompresi gambar.
+
 ![home](https://user-images.githubusercontent.com/70305222/141699530-c626ad59-63c6-48c7-a2ce-337e08b0efce.png)
+
+Ketika membuka website pada link yang diakses di atas, Anda akan dibawakan ke halaman beranda. Pilih gambar yang ingin Anda kompresi pada input 'Choose File' dan tingkat kompresinya (dalam skala 0-100) pada 'Image Compression Rate'. Lalu, tekan 'Compress'.
+
+Bila berhasil, maka akan ditampilkan hasil gambar yang original dengan yang sudah dikompresi seperti di bawah.
+![beforeafter](https://user-images.githubusercontent.com/70305222/141699651-07296e1e-a6c1-4263-8c7c-25dae288a01b.png)
+
+Terlihat berapa banyak data yang digunakan dibandingkan dengan gambar asli dan <i>runtime</i> dari program. Anda dapat memilih untuk mengunduh hasil kompresi dengan menekan 'Download' atau melakukan kompresi pada gambar yang lain dengan menekan 'Compress another image!'.
+
+Anda juga dapat mengeksplorasi halaman-halaman lain pada website yaitu 'How to Use' yang mengandung langkah-langkah cara penggunaan website dan juga 'About Us' yang menceritakan latar belakang di balik proyek ini.
