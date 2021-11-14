@@ -1,10 +1,5 @@
-from PIL import Image
 import numpy as np
-from os.path import join, dirname, realpath
-import math
 
-
-import time
 
 def svd(matrix):
     # BIKIN AT*A
@@ -32,7 +27,6 @@ def svd(matrix):
     # TRANSPOSE V
     V = np.transpose(V)
 
-    print(U.shape, sigma.shape, V.shape)
     return U, sigma, V
 
 
@@ -79,36 +73,3 @@ def matriximage(colormatrix, rank):
         imgO[:,:,3] = c4_f
 
     return np.uint8(imgO)
-
-
-start = time.time()
-im1 = Image.open(join(dirname(realpath(__file__)), 'input.jpg'))
-persentase = 0
-while (persentase <= 0 or persentase > 100):
-    persentase = float(input("Masukkan persentasenya (dari range 0-100) : "))
-
-# CEK MODE GAMBAR
-print(im1.mode)
-img = np.array(im1)
-# CEK ROW, WIDTH, COLOR_CHANNELS DARI GAMBAR
-print(img.shape)
-length, width, channel = img.shape
-max_rank = max(length, width)
-
-rank = math.floor((persentase / 100) * max_rank)
-
-pixel_diff = (length * rank + rank + width * rank) / (length * width) * 100
-# HITUNG KOMPRESI DENGAN SVD
-imgO = matriximage(img, rank)
-
-# BUAT KEMBALI GAMBAR DARI MATRIX
-imgout = Image.fromarray(imgO, mode=im1.mode)
-
-# SAVE
-imgout.save(join(dirname(realpath(__file__)), 'output.jpg'))
-end = time.time()
-
-# RUNTIME
-print(end-start)
-
-print("Pixel Difference : {}%".format(pixel_diff))
