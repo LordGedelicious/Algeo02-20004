@@ -93,10 +93,11 @@ img = np.array(im1)
 # CEK ROW, WIDTH, COLOR_CHANNELS DARI GAMBAR
 print(img.shape)
 length, width, channel = img.shape
-max_rank = min(length, width)
+max_rank = max(length, width)
 
 rank = math.floor((persentase / 100) * max_rank)
 
+pixel_diff = (length * rank + rank + width * rank) / (length * width) * 100
 # HITUNG KOMPRESI DENGAN SVD
 imgO = matriximage(img, rank)
 
@@ -109,3 +110,5 @@ end = time.time()
 
 # RUNTIME
 print(end-start)
+
+print("Pixel Difference : {}%".format(pixel_diff))
