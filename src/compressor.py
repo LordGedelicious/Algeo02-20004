@@ -12,16 +12,25 @@ def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix
     
     # Cek mode gambar, jika P atau PA, ubah ke RGB atau RGBA
     im_mode = img_in.mode
-    if im_mode == 'P':
-        img_in.convert('RGB')
+    print("image mode:", im_mode)
+    if im_mode == 'L':
+        img_in = img_in.convert('RGB')
+    elif im_mode == 'LA':
+        img_in = img_in.convert('RGBA')
+    elif im_mode == 'P':
+        img_in = img_in.convert('RGB')
     elif im_mode == 'PA':
-        img_in.convert('RGBA')
-        
+        img_in = img_in.convert('RGBA')
+    print("image mode setelah diconvert:", img_in.mode)
     # Ubah gambar menjadi array
     img_array = np.array(img_in)
+    print("ukuran matriks:", img_array.shape)
     
     # Cek length dan width dari gambar untuk menghitung k
-    length, width, _ = img_array.shape
+    if img_array.ndim == 2:
+        length, width = img_array.shape
+    else:
+        length, width, _ = img_array.shape
     max_rank = max(length, width)
     k = (cprate * max_rank) // 100
 
@@ -33,10 +42,14 @@ def compressor(original_realpath, compressed_realpath, file_name, cprate, prefix
     
     # Jika mode gambar awalnya adalah P atau PA, ubah kembali
     # menjadi P atau PA
-    if im_mode == 'P':
-        img_out.convert('P')
+    if im_mode == 'L':
+        img_in = img_in.convert('L')
+    elif im_mode == 'LA':
+        img_in = img_in.convert('LA')
+    elif im_mode == 'P':
+        img_in = img_out.convert('P')
     elif im_mode == 'PA':
-        img_out.convert('PA')
+        img_in = img_out.convert('PA')
     
     # Save
     img_out.save(join(compressed_realpath, prefix + file_name))
