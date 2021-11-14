@@ -1,5 +1,6 @@
-# Algeo02-20004
-
+# Compressify - Algeo02-20004
+Tugas Besar 2 IF 2123 Aljabar Linier dan Geometri
+Aplikasi Nilai Eigen dan Vektor Eigen dalam Kompresi Gambar
 
 # 1. Baca Image ***UDAH KELAR***
 # 2. Ubah pixel value (RGBA + Grayscale) ke matriks secara terpisah
