@@ -1,6 +1,24 @@
 # Compressify - Algeo02-20004
 Tugas Besar 2 IF 2123 Aljabar Linier dan Geometri
+
 Aplikasi Nilai Eigen dan Vektor Eigen dalam Kompresi Gambar
+
+
+
+## Table of Contents
+* [Informasi Umum](#informasi-umum)
+* [Technologies Used](#technologies-used)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Project Status](#project-status)
+* [Room for Improvement](#room-for-improvement)
+* [Acknowledgements](#acknowledgements)
+* [Contact](#contact)
+
+## Informasi Umum
+Pada Tugas Besar 2 IF 2123 Aljabar Linier dan Geometri kali ini kita diminta untuk membuat sebuah program kompresi gambar dengan memanfaatkan Singular Value Decomposition (SVD) yang berjalan di suatu web lokal sederhana.
 
 # 1. Baca Image ***UDAH KELAR***
 # 2. Ubah pixel value (RGBA + Grayscale) ke matriks secara terpisah
