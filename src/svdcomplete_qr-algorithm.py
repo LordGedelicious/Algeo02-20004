@@ -1,5 +1,4 @@
 from PIL import Image
-from math import copysign, sqrt
 import numpy as np
 from os.path import join, dirname, realpath
 
@@ -10,7 +9,7 @@ def svd(matrix):
     A = matrix.transpose() @ matrix
 
     # QR ALGORITHM AT*A untuk konvergen mendapatkan eigenvalue A dan eigenvector V
-    for i in range(2):
+    for i in range(1):
         # DIGUNAKAN BUILT-IN FUNGSI QR DECOMPOSITION, asumsi boleh karena tidak langsung menghasilkan SVD
         Q, R = np.linalg.qr(A)
         A = R @ Q
@@ -31,10 +30,12 @@ def svd(matrix):
     # TRANSPOSE V
     V = np.transpose(V)
 
+    print(U.shape, sigma.shape, V.shape)
     return U, sigma, V
 
 
 # TO PROCESSS THE DIFFERENT COLOR CHANNELS
+# SUPPORT L, LA, RGB, RGBA, CMYK
 def matriximage(colormatrix):
     m = colormatrix.shape[0]
     n = colormatrix.shape[1]
@@ -67,44 +68,22 @@ def matriximage(colormatrix):
 
 
 start = time.time()
-im1 = Image.open("lol.jpg")
+im1 = Image.open("input.jpg")
+# CEK MODE GAMBAR
+print(im1.mode)
 img = np.array(im1)
+# CEK ROW, WIDTH, COLOR_CHANNELS DARI GAMBAR
 print(img.shape)
 
-
-# TIAP CHANNEL
-# m = img.shape[0]
-# n = img.shape[1]
-# red = np.array([[img[i][j][0] for j in range(n)] for i in range(m)]).astype(int)
-# green = np.array([[img[i][j][1] for j in range(n)] for i in range(m)]).astype(int)
-# blue = np.array([[img[i][j][2] for j in range(n)] for i in range(m)]).astype(int)
-# # alpha = np.array([[img[i][j][3] for j in range(n)] for i in range(m)]).astype(int)
-# print("UDAH JADI RGB")
-
-# r1, r2, r3 = svd(red)
-# r = np.clip(((r1 @ r2) @ r3).round(0), 0, 255)
-# print("UDAH R")
-# g1, g2, g3 = svd(green)
-# g = np.clip(((g1 @ g2) @ g3).round(0), 0, 255)
-# print("UDAH G")
-# b1, b2, b3 = svd(blue)
-# b = np.clip(((b1 @ b2) @ b3).round(0), 0, 255)
-# print("UDAH B")
-
-# imgO = np.zeros([m,n,len(img[0][0])])
-# # print(imgO)
-# imgO[:,:,0] = r
-# imgO[:,:,1] = g
-# imgO[:,:,2] = b
-
-# imgO = np.uint8(imgO)
-
-# print(img[10])
-# print(imgO[10])
-
+# HITUNG KOMPRESI DENGAN SVD
 imgO = matriximage(img)
 
-imgout = Image.fromarray(imgO)
-imgout.save("jancok.jpg", "JPEG")
+# BUAT KEMBALI GAMBAR DARI MATRIX
+imgout = Image.fromarray(imgO, mode=im1.mode)
+
+# SAVE
+imgout.save("output.jpg")
 end = time.time()
+
+# RUNTIME
 print(end-start)
