@@ -39,9 +39,9 @@ Beberapa fitur yang dapat diakses oleh user saat menggunakan website/program:
 * Mendukung gambar dengan mode warna L, LA, P, PA, RGB, RGBA, dan CMYK
 
 ## Setup
-Python 3 digunakan untuk menjalankan frontend dan backend dari program, sehingga pastikan Python telah terinstall pada komputer. Bila belum, unduh terlebih dahulu Python 3 <a href="http://www.python.org/downloads/">di sini.</a>
+Python 3 digunakan untuk menjalankan frontend dan backend dari program, sehingga pastikan Python 3 telah terinstall pada komputer. Bila belum, unduh terlebih dahulu Python 3 <a href="http://www.python.org/downloads/">di sini.</a>
 
-Pastikan Python dan PIP sudah ditambahkan ke PATH, bila belum lihat stackoverflow <a href="http://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages">ini</a> dan <a href="http://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command">ini</a>.
+Pastikan Python dan PIP sudah ditambahkan ke PATH. Bila belum, lihat stackoverflow <a href="http://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages">ini</a> dan <a href="http://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command">ini</a>.
 
 Dengan PIP, install library Flask, numpy, dan Pillow yang dibutuhkan untuk menjalankan program:
 ```
@@ -52,6 +52,7 @@ pip install Pillow
 
 ## Penggunaan
 Untuk menjalankan program, jalankan file <b><i>app.py</i></b>
+
 Dapat juga menjalankan program dengan membuka terminal ke folder `/src` dan jalankan
 ```
 python app.py
