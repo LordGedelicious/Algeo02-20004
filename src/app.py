@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, url_for, render_template
+from flask import Flask, flash, request, redirect, url_for, render_template, Markup
 import os
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
@@ -18,7 +18,9 @@ app.config['COMPRESSED_FOLDER'] = COMPRESSED_FOLDER
 app.config['PREFIX_COMP'] = "compressed_"
 app.config['MAX_CONTENT_LENGTH'] = 120 * 1024 * 1024
  
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['bmp', 'dds', 'dib', 'eps', 'gif', 'icns', 'ico', 
+'im', 'jpeg', 'jpg', 'msp', 'pcx', 'png', 'pbm', 'sgi', 'spi', 'tga', 
+'tiff', 'webp', 'xbm'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -43,7 +45,7 @@ def process_image():
         
         return render_template('home.html', filename=filename, runtime=runtime, cprate=comprate)
     else:
-        flash('Allowed image types are: .png, .jpg, .jpeg, .gif')
+        flash(Markup('Allowed image types are as specificied <a href="http://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html" target="_blank">here.</a>'))
         return redirect(request.url)
 
 @app.route('/original/<filename>')
